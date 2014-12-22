@@ -93,10 +93,10 @@ ptm <- proc.time()
 ## Solve initial problem
 
 # mu <- sample(c(1:nrow(Sig)),nrow(Sig),replace = FALSE) # specify the constraint vector
-## mu <- runif(nrow(Sig),0.5,2) 
- eta <- 1000
- mu <- t(a2)%*%a1/eta ## for complexity
- eigen(Sig-eta*mu%*%t(mu)) # check positive definite or not
+#mu <- runif(nrow(Sig),0.5,2) 
+  eta <- 1000
+  mu <- t(a2)%*%a1/eta ## for complexity
+  eigen(Sig-eta*mu%*%t(mu)) # check positive definite or not
 
 
 nonsparse_ind <- which(mu==max(mu))
@@ -155,6 +155,9 @@ selt1.pos <- selt1[which(selt1>0)]
 delta.lamda1 <- selt1.pos[which.min(selt1.pos)]
 index1 <- act[pos.index1[which.min(selt1.pos)]]
 
+## Need to consider the case which all indices in act can not make beta reach zero in this step
+
+
 ## Find the index giving smallest delta lamda under 0->nonzero situation
 
 selt2 <- rep(1,length(nonact))
@@ -171,7 +174,7 @@ index2 <- nonact[which.min(selt2)]
 
 
 ##### Determine which situation happens and update beta, lamda, subgradient and the active set
-
+## This part is not rigorous need to modify
 if (delta.lamda1>delta.lamda2){
   delta.lamda <- delta.lamda2;
   index <- index2
