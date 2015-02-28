@@ -1,5 +1,3 @@
-## Function to simulate a p.d. matrix
-
 # Generating a random positive-definite matrix with specified positive eigenvalues
 # If eigenvalues are not specified, they are generated from a uniform distribution
 

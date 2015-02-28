@@ -93,7 +93,7 @@ ptm <- proc.time()
 ## Solve initial problem
 
 # mu <- sample(c(1:nrow(Sig)),nrow(Sig),replace = FALSE) # specify the constraint vector
-#mu <- runif(nrow(Sig),0.5,2)
+#mu <- runif(nrow(Sig),0.5,2) 
   eta <- 1000
   mu <- t(a2)%*%a1/eta ## for complexity
   eigen(Sig-eta*mu%*%t(mu)) # check positive definite or not
@@ -156,7 +156,7 @@ delta.lamda1 <- selt1.pos[which.min(selt1.pos)]
 index1 <- act[pos.index1[which.min(selt1.pos)]]
 
 if (length(selt1.pos)==0) {
-    delta.lamda1 <- Inf           ## consider the case which all indices in act can not make beta reach zero in this step
+    delta.lamda1 <- Inf           ## consider the case which all indices in act can not make beta reach zero in this step 
 }
 
 
@@ -285,7 +285,7 @@ d <- (a/b)*mupq-as.vector(test21%*%c)-sub[nonact]
 if (all(beta[sparse_ind]==0)==TRUE) break
 
 ## Modifications
-# if (all(isTRUE(all.equal(beta[sparse_ind],0)))==TRUE) break
+# if (all(isTRUE(all.equal(beta[sparse_ind],0)))==TRUE) break  
 # if (all(beta1>0)==TRUE) break  # previous stopping rule for all 1 constraint
 
 
@@ -293,7 +293,7 @@ if (all(beta[sparse_ind]==0)==TRUE) break
 
 ## Ploting
 
-## Original approach
+## Original approach 
 ## plot(rep(0,nrow(beta.mat)),beta.mat[,1],pch=21,cex=.5,xlim=c(0,lamda.vec[length(lamda.vec)]),xlab=expression(lambda),ylab="Coefficients")
 ## for (i in 1:nrow(beta.mat)){
 ##   lines(lamda.vec,beta.mat[i,])
@@ -311,27 +311,16 @@ if (all(beta[sparse_ind]==0)==TRUE) break
 y.max <- max(apply(beta.mat,2,max))
 y.min <- min(apply(beta.mat,2,min))
 y.med <- max(c(y.max,abs(y.min)))^(1)
-beta.tmp <- cbind(beta.mat,beta.mat[,ncol(beta.mat)])
-
-par(mfrow = c(3,1)) 
-
-pdf("PathP=2.pdf",width = 4, height = 4)
-png("PathP=2.png",width = 700, height = 700)
-
-plot(rep(0,nrow(beta.mat)),log(abs(beta.mat[,1]^(1))+1)*sign(beta.mat[,1]),pch=21,cex=.5,xlim=c(0,length(lamda.vec)),ylim =c(-15,18),xlab="kinks",ylab="Coefficients",main="Regularization Path, p=2")
+plot(rep(0,nrow(beta.mat)),log(abs(beta.mat[,1]^(1))+1)*sign(beta.mat[,1]),pch=21,cex=.5,xlim=c(0,length(lamda.vec)-1),ylim =c(-12,20),xlab="kinks",ylab="Coefficients",main="Regularization Path, p=4")
 for (i in 1:nrow(beta.mat)){
-  lines(c(0:(length(lamda.vec))),log(abs(beta.tmp[i,]^(1))+1)*sign(beta.tmp[i,]))
-#  lines(c((length(lamda.vec)-1),length(lamda.vec)),log(abs(beta.mat[i,ncol(beta.mat)]^(1))+1)*sign(beta.mat[i,ncol(beta.mat)])) 
+  lines(c(0:(length(lamda.vec)-1)),log(abs(beta.mat[i,]^(1))+1)*sign(beta.mat[i,]))
 }
-
 
 for (i in 1:nrow(beta.mat)){
   points(c(0:(length(lamda.vec)-1)),log(abs(beta.mat[i,]^(1))+1)*sign(beta.mat[i,]),pch=21,cex=.5,col="red")
 }
 
 abline(h=0,col="blue")  ## draw the horizontal zero line
-
-dev.off()
 
 
 proc.time() - ptm
