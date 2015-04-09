@@ -315,7 +315,7 @@ y.min <- min(apply(beta.mat,2,min))
 y.med <- max(c(y.max,abs(y.min)))^(1)
 beta.tmp <- cbind(beta.mat,beta.mat[,ncol(beta.mat)])
 
-par(mfrow = c(3,1)) 
+par(mfrow = c(3,1))
 
 pdf("PathP=2.pdf",width = 4, height = 4)
 png("PathP=2.png",width = 700, height = 700)
@@ -323,7 +323,7 @@ png("PathP=2.png",width = 700, height = 700)
 plot(rep(0,nrow(beta.mat)),log(abs(beta.mat[,1]^(1))+1)*sign(beta.mat[,1]),pch=21,cex=.5,xlim=c(0,length(lamda.vec)),ylim =c(-15,18),xlab="kinks",ylab="Coefficients",main="Regularization Path, p=2")
 for (i in 1:nrow(beta.mat)){
   lines(c(0:(length(lamda.vec))),log(abs(beta.tmp[i,]^(1))+1)*sign(beta.tmp[i,]))
-#  lines(c((length(lamda.vec)-1),length(lamda.vec)),log(abs(beta.mat[i,ncol(beta.mat)]^(1))+1)*sign(beta.mat[i,ncol(beta.mat)])) 
+#  lines(c((length(lamda.vec)-1),length(lamda.vec)),log(abs(beta.mat[i,ncol(beta.mat)]^(1))+1)*sign(beta.mat[i,ncol(beta.mat)]))
 }
 
 

@@ -1,0 +1,6 @@
+## load data
+install.packages("multtest") ## failed, package removed from CRAN
+
+## so I tried Bioconductor
+source("http://bioconductor.org/biocLite.R")
+biocLite("multtest")
