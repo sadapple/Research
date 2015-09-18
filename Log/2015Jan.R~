@@ -1,0 +1,273 @@
+## Factors
+factor()
+## Sometimes it's good to pre-specify the factor levels that you might need
+## Since you cannot sneak in "illegal" levels later
+
+tapply(x,f,g)
+## The function g is applied on each subgroup specified by f(we can include several factors in list format)
+split(x,f)  ## only split the vecotr(or data frame) x into groups
+
+by() can be applied bo objects rather than vectors, which might be better than tapply() sometimes
+## eg from Art of R Prog
+aba <- read.csv("abalone.data",header = TRUE)
+by(aba,aba$Gender,function(m) lm(m[,2]~m[,3]))
+
+## table()
+addmargins()
+subtable(tbl,subnames)  ## subnames is a list specifying the extraction
+
+## R Programming Structure ##
+## Control Statement
+# 1. nested if statement cana be confusing when you have more levels
+# 2. for construct works on any vector, regardless of mode. you can loop over a vector of filenames
+# 3. R does not directly support iteration over nonvector sets, but there are some indirect ways to accomplish it 
+lapply()
+get()  ## much more powerful than you think
+# if you have two matrices u&v, and wish to apply regression analysis to each of them, the sample code using get() is like:
+for (m in c("u","v")){
+    z <- get(m)
+    print(lm(z[,2] ~ z[,1]))
+}
+# 4. if else statement. The right brace before the else is used by the R parser to deduce that this is an if-else rather 
+# than just an if. Note also that an if-else statement works as a function call, so it returns the last value assigned.
+# eg.
+x <- 2
+y <- if(x==2) x else x+1
+# the following two versions seem to have the same effect for me
+r <- 4
+if(r==4)
+    x <- 1 else {
+    x <- 3
+    y <- 4
+}
+
+r <- 4
+if(r==4)
+    x <- 1 else {
+    x <- 3
+    y <- 4
+}
+
+## Boolean Operators
+# diff &&, ||, &, |, see P145 of ARP
+# In evaluating an if statement, we need a single Boolean, not a vector of Booleans
+# On the surface, R functions look similar to those of C,Java, but they have much more of
+# q flavor of functional programming, which has direct implication for programmer
+
+## Default values for argument
+## Named argument. Since R uses lazy evaluation, the named argument may not actually be used.
+
+## Returned Values
+## The returned value of a function Can be any object, a list or a function, etc. Without return(), 
+## the value of the last executed statment will be returned by default.
+## The following function has no return value, since the last statement is to call to for(), which returns NULL here 
+oddcount <- function(x){
+    k <- 0
+    for (n in x){
+        if (n %% 2 ==1) k <- k+1
+    }
+}
+
+## It is a good habit to use an explicit return() call in all lines in the middle of the code that cause a return.
+## You can omit a return() call at the end of the function if you wish.
+## If you have multiple return values, place them in a list or other container.
+
+## Functions are objects, so you can return them as values.
+## R functions are first-class objects. function() is just a built-in function to create functions!
+## There are two arguments to function(), one is the formal argument list for the function we're creating, the other
+## is the body of the function, which must be of class "expression". They can be accessed via formals() & body().
+
+page(abline)  ## to view a lengthy function
+## But note since some R functions are written directly in C, they are not viewable in this manner.
+
+## Not only can you return functions as values, you can also assign them and use them as arguments to other functions, and so on.
+f1 <- function(a,b) return(a+b)
+f2 <- function(a,b) return(a-b)
+f <- f1
+f(3,2)
+g <- function(h,a,b) h(a,b)
+g(f1,3,2)
+g(f2,3,2)
+
+## You can also loop through a list consisting of several functions. This would be useful, if you wished to write a loop
+## to plot a number of functions on the same graph.
+
+g1 <- function(x) return(sin(x))
+g2 <- function(x) return(tan(x))
+g3 <- function(x) return(sin(1/x))
+plot(c(-1,1),c(-2,2))
+for (f in c(g1,g2,g3)) plot(f,-1,1,add=T)
+
+## formals() and body() can even be used as replacement functions. Here let's see how we change the body of a function by assignment
+## See page 151 of ARP
+g <- function(h,a,b) h(a,b)
+body(g) <- quote(2*x+3)
+g
+g(3)   ## note here that g(3) returns 5, not 9. Since x is an object has value 1 in the current global environment.
+## If we further modify the arguments of function g, then it would work
+g <- function(h,a,b) h(a,b)
+body(g) <- quote(2*x+3)
+formals(g) <- list(x="x")  ## Is this the write way to change arguments? Any better approach?
+g
+g(3)
+## The body of the function has the class "call", which is the class produced by quote(). Without the call
+## to quote(), R would try to evaluate the quantity 2*x+3.
+
+
+## Enviroments and Scoping Rules
+## A function consists not only of its arguments and boy but also of its environment. The enviroment is
+## made up of the collection of objects present at the time the function is created.
+ls()
+ls.str()   ## get more information
+
+## eg
+w <- 12
+f <- function(y){
+    d <- 8
+    h <- function(){
+        return(d*(w+y))
+    }
+    return(h())
+}
+
+## In C, we would not have functions defined within functions, but in R, we could.
+## In the above, we have h() being local to f(), just like d is local to f(). In such situation,
+## it makes sense for scope to be hierarchical. Thus, here d which is local to f(), is in turn
+## local to h(). The same is true for y, for arguments are considered local in R.
+## Similarly, the hierarchical nature of scope implies that since w is global to f(), it is
+## global to h() as well.
+
+## With multiple nesting of functions, you have a nested sequence of larger and larger environments, 
+## with the "root" consisting of the top-level objects. In the above eg, note that h() is local to
+## f(), and invisible at the top level.
+
+## It's possible to allow name conflicts in the scope hierarchy. In the above eg, we could have a
+## local variable d within h(), conflicting with the one in f(). In such a situation, the innermost
+## environment is used first.
+
+## Environments created by inheritance in this manner are generally referred to by their memory locations.
+w <- 12
+f <- function(y){
+    d <- 8
+    h <- function(){
+        return(d*(w+y))
+    }
+    print(environment(h))
+    return(h())
+}
+## Compare with the following
+f <- function(y){
+    d <- 8
+    return(h())
+}
+
+h <- function(){
+    return(d*(w+y))
+}
+
+f(5)
+
+## The fix is to pass d and y as arguments
+f <- function(y){
+    d <- 8
+    return(h(d,y))
+}
+
+h <- function(dee,yyy){
+    return(dee*(w+yyy))
+}
+
+f(5)
+
+## Functions have almost no side effects. Functions do not change nonlocal variables.
+## Roughly speaking, the code in a function has read access to its nonlocal variables,
+## but does not have access to write them.
+
+## See extended eg in ARP about displaying the contents of a call frame
+
+## No pointers in R
+## <<- is typically used to write to top-level variables, but technically it does something diffferent
+## It actually search up the environment hierarchy
+
+
+
+
+
+## 1.19
+## Geometric probability plot
+png("MeetProblem.png",width = 700,height = 700)
+plot(c(0,60),c(0,60),type = "n",xlab = "x",ylab = "y")
+polygon(x=c(0,0,60,60),y=c(0,60,60,0),col = "blue")
+polygon(x=c(0,0,50,60,60,10),y=c(0,10,60,60,50,0),col="red")
+lines(c(0,60),c(0,60))
+text(-1,-1,"O")
+text(61,1,"A")
+text(61,61,"B")
+text(1,61,"C")
+text(-1,10,"D")
+text(50,61,"E")
+text(10,-1,"F")
+text(61,50,"G")
+dev.off()
+
+
+## R Graphics
+plot(c(-3,3),c(-1,5),type="n",xlab="x",ylab="y")
+
+abline(c(1,2))
+lines(c(1.5,2.5),c(3,3)) ## add more lines
+
+
+help(par)  ## for more parameter detail
+
+text(2.5,4,"hello") ## adding text
+
+text(locator(1),"hello")  ## to place text where you want by clicking the mouse
+
+## Restoring a plot
+
+recordPlot()
+replayPlot()
+
+## customizing graphs
+
+cex  # change character size
+text(1,1,"hello",cex = 1.5)
+
+xlim, ylim # range of axes
+
+polygon ## adding a polygon
+
+lowess() loess()  ## smoothing points, need some advanced knowledge to understand the difference
+
+curve() ## graphing explicit functions
+curve((x^2+1)^0.5,0,5)
+curve((x^2+1)^2,0,5,add=T)
+
+## Manifying a portion of the graph
+
+## modify the curve function to realize an inset feature
+
+## 3d plots
+persp()
+wireframe() ## draw surfaces
+cloud() ## scatter plot
+
+dev.new()
+library(lattice)
+a <- 1:20
+b <- 1:25
+eg <- expand.grid(x=a,y=b)
+eg$z <- eg$x^2+eg$x*eg$y
+wireframe(z~x+y,eg)
+
+
+
+## S4 classes
+
+setClass("employee",
+         representation(
+             name="character",
+             salary="numeric",
+             union="logical")
+         )

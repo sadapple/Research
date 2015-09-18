@@ -1,0 +1,4 @@
+## install packages for R 3.2.2 on Windows 10
+chooseCRANmirror()
+install.packages("dplyr")
+x <- 10

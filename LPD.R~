@@ -1,0 +1,13 @@
+## This script tries to implement the LPD proposed by Tony Cai
+## the fastclime package
+install.packages("fastclime")
+library(fastclime)
+# Load the package
+L = fastclime.generator(n=200,d=50,graph="hub")
+# Generate data with hub structures
+out = fastclime(L$data,0.1)
+# Estimate the solution path
+plot(out)
+# Plot the sparsity level information from the graph path
+out1 = fastclime.lambda(out$lambdamtx, out$icovlist, 0.2)
+# Finds the estimated path corrsponding to lambda=0.2

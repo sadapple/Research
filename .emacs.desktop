@@ -1,0 +1,30 @@
+;; -*- mode: emacs-lisp; coding: emacs-mule; -*-
+;; --------------------------------------------------------------------------
+;; Desktop File for Emacs
+;; --------------------------------------------------------------------------
+;; Created Wed Apr 15 23:30:04 2015
+;; Desktop file format version 206
+;; Emacs version 24.4.1
+
+;; Global section:
+(setq desktop-saved-frameset [frameset 1 (21807 11452 514000 0) (desktop . "206") "Chuan@SADAPPLELC" nil nil ((((font-backend uniscribe gdi) (font . "-outline-Courier New-normal-normal-normal-mono-16-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars . right) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "#839496") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 10) (alpha) (menu-bar-lines . 1) (tool-bar-lines . 0) (title) (fullscreen . maximized) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 17) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (frameset--id . "072E-58FD-3DD2-E261") (frameset--mini t) (height . 48) (width . 140) (modeline . t) (minibuffer . t) (unsplittable) (left + -8) (top + -8) (icon-name) (visibility . t) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 6) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 72) (min-pixel-width . 100) (min-pixel-height-ignore . 54) (min-pixel-width-ignore . 60) (min-pixel-height-safe . 18) (min-pixel-width-safe . 20)) leaf (pixel-width . 1440) (pixel-height . 862) (total-width . 144) (total-height . 47) (normal-height . 1.0) (normal-width . 1.0) (buffer "*R*" (selected) (hscroll . 0) (fringes 10 10 nil) (margins 3) (scroll-bars 17 2 t nil) (vscroll . 0) (dedicated . t) (point . 8133) (start . 6671))) (((font-backend uniscribe gdi) (font . "-outline-Courier New-normal-normal-normal-mono-16-*-*-*-c-*-iso8859-1") (border-width . 2) (internal-border-width . 0) (right-divider-width . 0) (bottom-divider-width . 0) (vertical-scroll-bars . right) (foreground-color . "#839496") (background-color . "#002b36") (mouse-color . "#839496") (border-color . "black") (screen-gamma) (line-spacing) (left-fringe . 10) (right-fringe . 10) (alpha) (menu-bar-lines . 1) (tool-bar-lines . 0) (title) (fullscreen . maximized) (icon-type) (auto-raise) (auto-lower) (cursor-type . box) (scroll-bar-width . 17) (horizontal-scroll-bars . t) (display-type . color) (background-mode . dark) (cursor-color . "#839496") (environment) (frameset--id . "2A2A-388C-4EDD-9153") (frameset--mini t . t) (height . 48) (width . 140) (modeline . t) (minibuffer . t) (unsplittable) (left + -8) (top + -8) (icon-name) (visibility . t) (display . "w32") (explicit-name) (tool-bar-position . top)) ((min-height . 4) (min-width . 10) (min-height-ignore . 3) (min-width-ignore . 6) (min-height-safe . 1) (min-width-safe . 2) (min-pixel-height . 72) (min-pixel-width . 100) (min-pixel-height-ignore . 54) (min-pixel-width-ignore . 60) (min-pixel-height-safe . 18) (min-pixel-width-safe . 20)) leaf (pixel-width . 1440) (pixel-height . 862) (total-width . 144) (total-height . 47) (normal-height . 1.0) (normal-width . 1.0) (buffer "NonsingularClasso.R" (selected . t) (hscroll . 0) (fringes 10 10 nil) (margins 3) (scroll-bars 17 2 t nil) (vscroll . 0) (dedicated) (point . 1765) (start . 1720))))])
+(setq desktop-missing-file-warning nil)
+(setq tags-file-name nil)
+(setq tags-table-list nil)
+(setq search-ring nil)
+(setq regexp-search-ring nil)
+(setq register-alist nil)
+(setq file-name-history '("c:/Dropbox/Workspace/R/Rcode/Research/" "C:/Dropbox/Workspace/R/Rcode/Research/NonsingularClasso.R"))
+
+;; Buffer section -- buffers listed in same order as in buffer list:
+(desktop-create-buffer 206
+  "c:/Dropbox/Workspace/R/Rcode/Research/NonsingularClasso.R"
+  "NonsingularClasso.R"
+  'ess-mode
+  '(linum-mode undo-tree-mode autopair-mode eldoc-mode text-scale-mode)
+  1765
+  '(1686 nil)
+  nil
+  nil
+  '((indent-tabs-mode) (buffer-file-coding-system . undecided-dos)))
+
