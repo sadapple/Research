@@ -1,0 +1,36 @@
+model
+{
+    for (i in 1:nt) {
+        w[i, 1] <- 0.00000E+00
+        delta[i, 1] <- 0.00000E+00
+        for (k in 1:na[i]) {
+            for (m in 1:nobs[i, k]) {
+                Ydata[m, k, i] ~ dbern(p[m, k, i])
+                logit(p[m, k, i]) <- mu[i] + delta[i, k] + beta * 
+                  step(1.1 - ntreat[i, 1]) * (1 - equals(ntreat[i, 
+                  k], ntreat[i, 1])) * X[m, k, i]
+            }
+        }
+        for (k in 2:na[i]) {
+            delta[i, k] ~ dnorm(md[i, k], taud[i, k])
+            md[i, k] <- dd[ntreat[i, k]] - dd[ntreat[i, 1]] + 
+                sw[i, k]
+            taud[i, k] <- prec * 2 * (k - 1)/k
+            w[i, k] <- (delta[i, k] - dd[ntreat[i, k]] + dd[ntreat[i, 
+                1]])
+            sw[i, k] <- sum(w[i, 1:k - 1])/(k - 1)
+        }
+    }
+    dd[1] <- 0.00000E+00
+    for (k in 2:4) {
+        dd[k] ~ dnorm(0.00000E+00, 1.00000E-06)
+    }
+    tau <- 1/prec
+    tau.sqrt <- sqrt(tau)
+    prec <- 1/(sd * sd)
+    sd ~ dunif(0.00000E+00, 1)
+    beta ~ dnorm(0.00000E+00, 1.00000E-06)
+    for (j in 1:4) {
+        mu[j] ~ dnorm(0.00000E+00, 1.00000E-06)
+    }
+}
